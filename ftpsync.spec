@@ -6,7 +6,7 @@ Version:	8086
 Release:	0.1
 License:	GPL v2
 Group:		Applications
-Source0:	http://ftp-master.debian.org/ftpsync.tar.gz
+Source0:	http://ftp-master.debian.org/%{name}.tar.gz
 # Source0-md5:	b824db81496648d8c298069d8b7bbbe5
 URL:		http://www.debian.org/mirror/ftpmirror
 Requires:	rsync
@@ -24,14 +24,14 @@ Zestaw skryptów do mirrorowania Debiana.
 %prep
 %setup -q -c
 
-sed -i 's,${BASEDIR}/etc,/etc/ftpsync,' bin/* etc/*.sample etc/common
+sed -i 's,${BASEDIR}/etc,%{_sysconfdir}/ftpsync,' bin/* etc/*.sample etc/common
 sed -i 's,${LOGDIR}/log,/var/log/ftpsync,' bin/* etc/*.sample etc/common
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_sysconfdir}/%{name}/secrets,%{_var}/{log,lib}/%{name}}
 
-install etc/common $RPM_BUILD_ROOT/etc/%{name}
+install etc/common $RPM_BUILD_ROOT%{_sysconfdir}/%{name}
 install bin/* $RPM_BUILD_ROOT%{_bindir}
 
 %clean
@@ -55,6 +55,6 @@ fi
 %defattr(644,root,root,755)
 %doc README etc/*.sample
 %{_sysconfdir}/%{name}
-%{_bindir}/*
+%attr(755,root,root) %{_bindir}/*
 %attr(2751,root,ftpsync) %dir /var/log/ftpsync
 %attr(2751,ftpsync,ftpsync) %dir /var/lib/ftpsync
