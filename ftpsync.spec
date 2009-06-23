@@ -24,8 +24,8 @@ Zestaw skryptów do mirrorowania Debiana.
 %prep
 %setup -q -c
 
-sed -i 's,${BASEDIR}/etc,/etc/ftpsync,' bin/* etc/*
-sed -i 's,${LOGDIR}/log,/var/log/ftpsync,' bin/* etc/*
+sed -i 's,${BASEDIR}/etc,/etc/ftpsync,' bin/* etc/*.sample etc/common
+sed -i 's,${LOGDIR}/log,/var/log/ftpsync,' bin/* etc/*.sample etc/common
 
 %install
 rm -rf $RPM_BUILD_ROOT
